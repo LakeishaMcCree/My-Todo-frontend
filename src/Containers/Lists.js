@@ -1,21 +1,28 @@
-import React from 'react' 
-import {Link} from 'react-router-dom' 
+import React from 'react'  
+import { connect } from 'react-redux'
+import ListItem from '../Components/ListItem'
+
 
 class Lists extends React.Component {
     
     render() {
-        
-        const list = this.props.lists.map(list =>
-            <li key={list.id} list={list}>
-                <Link to={`/lists/${list.id}`}>{list.title}</Link>
-            </li> )
+        const lists = this.props.lists.map((list, i) => <ListItem key={i} list={list} />)
         
         return (
+
             <div>
-                {list}
+                <h3>Todo List: </h3>
+                <ul className="collection">
+                    {lists}
+                </ul>
             </div>
-        )
+        );
     }
 }
 
-export default Lists
+const mapStateToProps = state => {
+    return {
+        lists: state.lists
+    }
+}
+export default connect(mapStateToProps)(Lists)
